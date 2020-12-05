@@ -14,6 +14,9 @@
  */
  
 // [START gae_python38_log]
+
+let map, popup, Popup;
+
 function initMap() {
     // Locations
     const umich = { lat: 42.276877, lng: -83.738235 };
@@ -22,9 +25,37 @@ function initMap() {
       zoom: 4,
       center: umich,
     });
+
+    //Content for Infowindow that pops up on click
+    const contentString =
+    '<div id="content">' +
+    '<div id="siteNotice">' +
+    "</div>" +
+    '<h1 id="firstHeading" class="firstHeading">Diag Picnic</h1>' +
+    '<div id="bodyContent">' +
+    "<p>Join us for a relaxing picnic on the UofM diag! Please bring your own dish to pass.</p>" +
+    "</div>" +
+    "</div>";
+
+    //Infowindow that pops up on click
+  const infowindow = new google.maps.InfoWindow({
+    content: contentString,
+  });
+
     // The marker, positioned at umich
     const marker = new google.maps.Marker({
       position: umich,
       map: map,
+      animation: google.maps.Animation.DROP,
     });
+  marker.addListener("click", toggleBounce);
+
+  function toggleBounce(){
+    if (marker.getAnimation() !== null) {
+      marker.setAnimation(null);
+    } else {
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+      infowindow.open(map, marker);
+    }
   }
+}
