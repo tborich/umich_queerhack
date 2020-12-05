@@ -17,9 +17,26 @@
 
 let map, popup, Popup;
 
-function initMap() {
+async function initMap() {
+
+  //Event Database
+  var db = firebase.firestore();
+
+  //QUERY ALL EVENTS
+  var lat = 0;
+  var lng = 0;
+  var disc = "";
+  var name = "";
+  await db.collection("events").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+        lat = doc.get('lat');
+        lng = doc.get('lng');
+        disc = doc.get('discription');
+        name = doc.get('event_name')
+    });
+  });
     // Locations
-    const umich = { lat: 42.276877, lng: -83.738235 };
+    const umich = { lat: lat, lng: lng };
     // The map, centered at umich
     const map = new google.maps.Map(document.getElementById("map"), {
       zoom: 4,
@@ -31,9 +48,9 @@ function initMap() {
     '<div id="content">' +
     '<div id="siteNotice">' +
     "</div>" +
-    '<h1 id="firstHeading" class="firstHeading">Diag Picnic</h1>' +
+    '<h1 id="firstHeading" class="firstHeading">' + name + '</h1>' +
     '<div id="bodyContent">' +
-    "<p>Join us for a relaxing picnic on the UofM diag! Please bring your own dish to pass.</p>" +
+    "<p>"+disc+"</p>" +
     "</div>" +
     "</div>";
 
