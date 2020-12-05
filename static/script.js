@@ -15,16 +15,16 @@
  
 // [START gae_python38_log]
 function initMap() {
-    // The location of Uluru
-    const uluru = { lat: -25.344, lng: 131.036 };
-    // The map, centered at Uluru
+    // Locations
+    const umich = { lat: 42.276877, lng: -83.738235 };
+    // The map, centered at umich
     const map = new google.maps.Map(document.getElementById("map"), {
       zoom: 4,
-      center: uluru,
+      center: umich,
     });
-    // The marker, positioned at Uluru
+    // The marker, positioned at umich
     const marker = new google.maps.Marker({
-      position: uluru,
+      position: umich,
       map: map,
     });
   }
