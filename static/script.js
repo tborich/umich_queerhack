@@ -17,7 +17,7 @@
 
 let map, popup, Popup;
 
-async function initMap() {
+function initMap() {
 
   //Event Database
   var db = firebase.firestore();
@@ -27,15 +27,100 @@ async function initMap() {
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 11,
     center: center,
+
+    //Disable most of google map features such as streetview
     disableDefaultUI: true,
     scaleControl: true,
     zoomControl: true,
+
+    //Night Mode!
+    styles: [
+      { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+      { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+      { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+      {
+        featureType: "administrative.locality",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#d59563" }],
+      },
+      {
+        featureType: "poi",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#d59563" }],
+      },
+      {
+        featureType: "poi.park",
+        elementType: "geometry",
+        stylers: [{ color: "#263c3f" }],
+      },
+      {
+        featureType: "poi.park",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#6b9a76" }],
+      },
+      {
+        featureType: "road",
+        elementType: "geometry",
+        stylers: [{ color: "#38414e" }],
+      },
+      {
+        featureType: "road",
+        elementType: "geometry.stroke",
+        stylers: [{ color: "#212a37" }],
+      },
+      {
+        featureType: "road",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#9ca5b3" }],
+      },
+      {
+        featureType: "road.highway",
+        elementType: "geometry",
+        stylers: [{ color: "#746855" }],
+      },
+      {
+        featureType: "road.highway",
+        elementType: "geometry.stroke",
+        stylers: [{ color: "#1f2835" }],
+      },
+      {
+        featureType: "road.highway",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#f3d19c" }],
+      },
+      {
+        featureType: "transit",
+        elementType: "geometry",
+        stylers: [{ color: "#2f3948" }],
+      },
+      {
+        featureType: "transit.station",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#d59563" }],
+      },
+      {
+        featureType: "water",
+        elementType: "geometry",
+        stylers: [{ color: "#17263c" }],
+      },
+      {
+        featureType: "water",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#515c6d" }],
+      },
+      {
+        featureType: "water",
+        elementType: "labels.text.stroke",
+        stylers: [{ color: "#17263c" }],
+      },
+    ],
   });
 
   //Single InfoWindow
   infoWindow = new google.maps.InfoWindow;
+
   //QUERY ALL EVENTS
-  await db.collection("events").get().then((querySnapshot) => {
+  db.collection("events").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
         var lat = doc.get('lat');
         var lng = doc.get('lng');
@@ -46,7 +131,7 @@ async function initMap() {
 
         const loc = { lat: lat, lng: lng };
 
-        const contentString = '<div class="info-box-wrap">'+
+        const contentString = '<div>'+
           '<div class="info-box-text-wrap">'+
           '<h6 class="name">'+name+'</h6>'+
           '<p class="disc">'+disc+'</p>'+
@@ -80,3 +165,4 @@ async function initMap() {
     // Locations
     
 }
+
