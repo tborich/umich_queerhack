@@ -81,8 +81,18 @@ class NewEventWindow extends React.Component {
         </form>
         <button style={{backgroundColor: "Transparent", border: "none", outline: "none", color: "#B25B00", fontSize: '30px'}}
           onClick={() => { 
-            this.props.action;
-            //STILL NEED TO GRAB STATE BEFORE UNMOUNT
+            this.props.action();
+
+            firebase.firestore().collection("events").add({
+              discription: this.state.discription,
+              duration: "180",
+              event_name: this.state.eventName,
+              host: this.state.host,
+              lat: 42.291076, 
+              lng: -83.777737,
+              time: 0
+          })
+            //TODO RELOAD MAP AFTER NEW EVENT
             this.setState({ show: false });
           }}>
             Submit
@@ -97,6 +107,7 @@ class EventButton extends React.Component {
       super(props);
       this.handler = this.handler.bind(this);
       this.state = { pressed: false }
+      console.log("TEST");
     }
     handler() {
       this.setState({ pressed: false });
@@ -123,9 +134,6 @@ class EventButton extends React.Component {
 )
     }
   }
-
-
-
 
 const domContainer = document.querySelector('#event_button_container');
 ReactDOM.render(e(EventButton), domContainer);

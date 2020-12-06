@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import EventButton from './event_button';
 // import firebase from 'firebase/app';
 import Messenger from './messaging';
 
