@@ -8,7 +8,8 @@ function googleSignin() {
     .signInWithPopup(provider).then(function(result) {
        var token = result.credential.accessToken;
        var user = result.user;
-         
+    
+       console.log(firebase.auth().currentUser.uid.usergetDisplayName)
        console.log(token)
        console.log(user)
     }).catch(function(error) {
