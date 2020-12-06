@@ -117,11 +117,14 @@ class Messenger extends React.Component {
 		// Render the messages
 		return (
 			<div>
-				<div>
+				<div style={{color: "White"}}>
+			
 					{ messages.map( (doc, index) => (
-						<p key={index}>{ doc.fields.user.stringValue } { doc.fields.message.stringValue }</p>
-					)) }
+						<p key={index}>{ doc.fields.user.stringValue + ":" } { doc.fields.message.stringValue }</p>
+
+			))}
 				</div>
+				
 				<form onSubmit={this.handleSubmit}>
 					<input type="text" value={ value } onChange={this.handleChange} />
 				</form>
