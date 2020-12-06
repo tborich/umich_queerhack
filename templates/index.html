@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Map</title>
+    <!--Google Maps Initialization-->
+    
+
+    <!--JS and CSS-->
+    <link rel="stylesheet" type="text/css" href="../static/style.css" />
+    <script src="../static/script.js"></script>
+
+  </head>
+  <body>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+<!-- Firestore -->
+<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
+
+<script src="../static/auth.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyD02G416LGdspt0Kz4485S931Wer_PJQ6c",
+    authDomain: "queerhacks-um.firebaseapp.com",
+    projectId: "queerhacks-um",
+    storageBucket: "queerhacks-um.appspot.com",
+    messagingSenderId: "271457554909",
+    appId: "1:271457554909:web:17b1fc1156fde0fac0e634",
+    measurementId: "G-2W37N0WLK6"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
+<script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD02G416LGdspt0Kz4485S931Wer_PJQ6c&callback=initMap&libraries=&v=weekly"
+      defer
+></script>
+
+<!--The div element for the map -->
+<div id="map"></div>
+<button onclick = "googleSignin()", id="google-button"></button>
+
+<div id="like_button_container"></div>
+<div id="messenger_container"></div>
+
+<!-- Load our React component. -->
+<script src="../static/bundle.js"></script>
+  </body>
+</html>

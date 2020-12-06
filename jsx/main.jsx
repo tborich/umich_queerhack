@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import firebase from 'firebase/app';
+import Messenger from './messaging';
 
 'use strict';
 
@@ -62,3 +63,5 @@ class LikeButton extends React.Component {
 
 const domContainer = document.querySelector('#like_button_container');
 ReactDOM.render(e(LikeButton), domContainer);
+const messContainer = document.querySelector('#messenger_container');
+ReactDOM.render(e(Messenger), messContainer);
