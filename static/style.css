@@ -42,3 +42,13 @@ body {
   color:#2c0021;
   font-size: large;
 }
+
+#google-button {
+  background-image: url("./img/googleG.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color:  #242f3e;
+  background-size: 50px 50px;
+  height: 60px;  
+  width: 60px;
+}
