@@ -22,57 +22,61 @@ async function initMap() {
   //Event Database
   var db = firebase.firestore();
 
+  //Initialize Map
+  const center = { lat: 42.277424, lng: -83.738246};
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 11,
+    center: center,
+    disableDefaultUI: true,
+    scaleControl: true,
+    zoomControl: true,
+  });
+
+  //Single InfoWindow
+  infoWindow = new google.maps.InfoWindow;
   //QUERY ALL EVENTS
-  var lat = 0;
-  var lng = 0;
-  var disc = "";
-  var name = "";
   await db.collection("events").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
-        lat = doc.get('lat');
-        lng = doc.get('lng');
-        disc = doc.get('discription');
-        name = doc.get('event_name')
+        var lat = doc.get('lat');
+        var lng = doc.get('lng');
+        var disc = doc.get('discription');
+        var name = doc.get('event_name');
+        var time = doc.get('time').toDate().toLocaleString([], 
+          {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
+
+        const loc = { lat: lat, lng: lng };
+
+        const contentString = '<div class="info-box-wrap">'+
+          '<div class="info-box-text-wrap">'+
+          '<h6 class="name">'+name+'</h6>'+
+          '<p class="disc">'+disc+'</p>'+
+          '<p class="date">'+time+'</p>'+
+        '</div>'+
+        '</div>';
+
+        // The marker, positioned at umich
+        const marker = new google.maps.Marker({
+          position: loc,
+          map: map,
+          animation: google.maps.Animation.DROP,
+        });
+      marker.addListener("click", toggleBounce);
+    
+      function toggleBounce(){
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(4);
+        }
+        infoWindow.setContent(contentString);
+        infoWindow.open(map, marker);
+        google.maps.event.addListener(map, 'click', function() {
+          infoWindow.close();
+      });
+      }
+
     });
   });
     // Locations
-    const umich = { lat: lat, lng: lng };
-    // The map, centered at umich
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 4,
-      center: umich,
-    });
-
-    //Content for Infowindow that pops up on click
-    const contentString =
-    '<div id="content">' +
-    '<div id="siteNotice">' +
-    "</div>" +
-    '<h1 id="firstHeading" class="firstHeading">' + name + '</h1>' +
-    '<div id="bodyContent">' +
-    "<p>"+disc+"</p>" +
-    "</div>" +
-    "</div>";
-
-    //Infowindow that pops up on click
-  const infowindow = new google.maps.InfoWindow({
-    content: contentString,
-  });
-
-    // The marker, positioned at umich
-    const marker = new google.maps.Marker({
-      position: umich,
-      map: map,
-      animation: google.maps.Animation.DROP,
-    });
-  marker.addListener("click", toggleBounce);
-
-  function toggleBounce(){
-    if (marker.getAnimation() !== null) {
-      marker.setAnimation(null);
-    } else {
-      marker.setAnimation(google.maps.Animation.BOUNCE);
-      infowindow.open(map, marker);
-    }
-  }
+    
 }
