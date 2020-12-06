@@ -30,9 +30,15 @@ body {
   padding:0 0 0 0;
   margin:0 0 0 0;
 }
+.info-box-text-wrap p.host {
+  color:#550040;
+  font-size: large;
+}
 .info-box-text-wrap p.disc {
   color:#B25B00;
+  font-size: medium;
 }
 .info-box-text-wrap p.time {
   color:#2c0021;
+  font-size: large;
 }

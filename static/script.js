@@ -119,6 +119,18 @@ function initMap() {
   //Single InfoWindow
   infoWindow = new google.maps.InfoWindow;
 
+/*Quick Add Events to Database (edit timestamp on firebase website)
+db.collection("events").add({
+    discription: "We are having people over for Christmas Dinner! If you don't have anywhere to go, stop on by!",
+    duration: "180",
+    event_name: "Christmas Dinner",
+    host: "Steve (He/Him)",
+    lat: 42.291076, 
+    lng: -83.777737,
+    time: 0
+})
+*/
+
   //QUERY ALL EVENTS
   db.collection("events").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
@@ -128,12 +140,13 @@ function initMap() {
         var name = doc.get('event_name');
         var time = doc.get('time').toDate().toLocaleString([], 
           {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
-
+        var host = doc.get('host');
         const loc = { lat: lat, lng: lng };
 
         const contentString = '<div>'+
           '<div class="info-box-text-wrap">'+
           '<h6 class="name">'+name+'</h6>'+
+          '<p class="host">'+host+'</p>'+
           '<p class="disc">'+disc+'</p>'+
           '<p class="date">'+time+'</p>'+
         '</div>'+
