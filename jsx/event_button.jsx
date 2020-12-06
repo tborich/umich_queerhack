@@ -18,6 +18,7 @@ class NewEventWindow extends React.Component {
       show: true
      }
      this.handleInputChange = this.handleInputChange.bind(this);
+     this.handleClick = this.handleClick.bind(this);
   }
 
   handleInputChange(event) {
@@ -28,6 +29,44 @@ class NewEventWindow extends React.Component {
       [name]: value
     });
   }
+
+
+  handleClick(){
+    this.props.action();
+
+      var address = this.state.location;
+      var geocoder= new google.maps.Geocoder();
+      var description = this.state.discription;
+      var event_Name = this.state.eventName;
+      var Host = this.state.host;
+      var date = Date.parse(this.state.time);
+      console.log(description);
+      console.log(event_Name);
+      console.log(Host);
+      geocoder.geocode( { 'address': address}, function(results, status) {
+
+        console.log(status);
+        if (status == 'OK') {
+          
+          firebase.firestore().collection("events").add({
+            discription: description,
+            duration: "180",
+            event_name: event_Name,
+            host: Host,
+            lat: results[0].geometry.location.lat(), 
+            lng: results[0].geometry.location.lng(),
+            time: new FieldValue.serverTimestamp().set(date)
+        }) 
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    
+    //TODO RELOAD MAP AFTER NEW EVENT
+    this.setState({ show: false });
+  }
+
+
   render() {
     if(this.state.show == false)
       return null;
@@ -80,21 +119,7 @@ class NewEventWindow extends React.Component {
         </label>
         </form>
         <button style={{backgroundColor: "Transparent", border: "none", outline: "none", color: "#B25B00", fontSize: '30px'}}
-          onClick={() => { 
-            this.props.action();
-
-            firebase.firestore().collection("events").add({
-              discription: this.state.discription,
-              duration: "180",
-              event_name: this.state.eventName,
-              host: this.state.host,
-              lat: 42.291076, 
-              lng: -83.777737,
-              time: 0
-          })
-            //TODO RELOAD MAP AFTER NEW EVENT
-            this.setState({ show: false });
-          }}>
+          onClick= {this.handleClick}>
             Submit
           </button>
     </div>

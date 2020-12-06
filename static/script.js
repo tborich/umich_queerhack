@@ -138,7 +138,9 @@ db.collection("events").add({
         var lng = doc.get('lng');
         var disc = doc.get('discription');
         var name = doc.get('event_name');
-        var time = doc.get('time').toDate().toLocaleString([], 
+        var time = doc.get('time')
+        if (time > 0)
+          time = time.toDate().toLocaleString([], 
           {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
         var host = doc.get('host');
         const loc = { lat: lat, lng: lng };
